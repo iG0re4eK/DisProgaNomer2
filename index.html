@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Симплекс метод оффлайн</title>
+  </head>
+  <body>
+    <div class="centered">
+      <div class="simplex">
+        <h1>Калькулятор симплекс-метода</h1>
+        <div class="simplex-variables">
+          <span>Количество переменных:</span
+          ><input
+            id="varsBox"
+            type="number"
+            min="1"
+            max="1000"
+            value="3"
+            oninput="updateVariables()"
+          />
+        </div>
+        <div class="simplex-num-restrictions">
+          <span>Количество ограничений:</span
+          ><input
+            id="restrBox"
+            type="number"
+            min="1"
+            max="1000"
+            value="3"
+            oninput="updateRestrictions()"
+          />
+        </div>
+        <div class="function-block">
+          <div style="margin: 10px 0"><b>Целевая функция</b></div>
+          <div class="simplex-function">
+            <span id="function"
+              ><input
+                id="var0"
+                type="number"
+                style="width: 45px"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              /><span> x<sub>1</sub> + </span
+              ><input
+                id="var1"
+                type="number"
+                style="width: 45px"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              /><span> x<sub>2</sub> + </span
+              ><input
+                id="var2"
+                type="number"
+                style="width: 45px"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              /><span> x<sub>3</sub></span></span
+            ><span> → </span>
+            <select id="mode">
+              <option>min</option>
+              <option>max</option>
+            </select>
+          </div>
+        </div>
+        <div class="simplex-restrictions">
+          <div style="margin: 10px 0">
+            <b>Ограничения</b>
+          </div>
+          <div id="restrictions">
+            <div id="rest-0-box" class="restriction-div">
+              <input
+                style="width: 45px"
+                id="rest-0-0"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+              <span> x<sub>1</sub> + </span>
+              <input
+                style="width: 45px"
+                id="rest-0-1"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+              <span> x<sub>2</sub> + </span>
+              <input
+                style="width: 45px"
+                id="rest-0-2"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+              <span> x<sub>3</sub></span>
+              <select id="cond-0">
+                <option value="≤">≤</option>
+                <option value="=">=</option>
+                <option value="≥">≥</option>
+              </select>
+
+              <input
+                style="width: 45px; text-align: left"
+                id="rest-0-value"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+            </div>
+            <div id="rest-1-box" class="restriction-div">
+              <input
+                style="width: 45px"
+                id="rest-1-0"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+              <span> x<sub>1</sub> + </span>
+              <input
+                style="width: 45px"
+                id="rest-1-1"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+              <span> x<sub>2</sub> + </span>
+              <input
+                style="width: 45px"
+                id="rest-1-2"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+              <span> x<sub>3</sub></span>
+              <select id="cond-1">
+                <option value="≤">≤</option>
+                <option value="=">=</option>
+                <option value="≥">≥</option>
+              </select>
+
+              <input
+                style="width: 45px; text-align: left"
+                id="rest-1-value"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+            </div>
+            <div id="rest-2-box" class="restriction-div">
+              <input
+                style="width: 45px"
+                id="rest-2-0"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+              <span> x<sub>1</sub> + </span>
+              <input
+                style="width: 45px"
+                id="rest-2-1"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+              <span> x<sub>2</sub> + </span>
+              <input
+                style="width: 45px"
+                id="rest-2-2"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+              <span> x<sub>3</sub></span>
+              <select id="cond-2">
+                <option value="≤">≤</option>
+                <option value="=">=</option>
+                <option value="≥">≥</option>
+              </select>
+
+              <input
+                style="width: 45px; text-align: left"
+                id="rest-2-value"
+                placeholder="0"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="rest-vars" style="margin: 10px 0">
+          <span>x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub> ≥ 0</span>
+        </div>
+
+        <div class="simplex-buttons">
+          <button class="simplex-btn" onclick="clearFields()">Очистить</button>
+          <button class="simplex-btn" onclick="solveSimplex()">Решить</button>
+        </div>
+      </div>
+      <div id="table-container"></div>
+    </div>
+
+    <script src="main.js" defer></script>
+  </body>
+</html>

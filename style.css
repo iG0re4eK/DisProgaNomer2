@@ -1,0 +1,91 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+#table-container {
+  margin-top: 50px;
+}
+
+.centered {
+  text-align: center;
+  margin: 100px auto;
+}
+
+.simplex {
+  display: inline-block;
+  border: 3px solid rgb(57, 0, 80);
+  padding: 40px;
+  border-radius: 10px;
+}
+
+.simplex-btn {
+  width: 100px;
+  height: 40px;
+  margin: 0 10px;
+  font-size: 16px;
+  background-color: rgb(61, 18, 141);
+  color: rgb(255, 255, 255);
+  border-radius: 7px;
+  border: none;
+  transition: 0.3s;
+}
+
+sub {
+  vertical-align: sub;
+  font-size: 75%; /* Подстрочные индексы должны быть меньше */
+}
+
+.simplex-btn:hover {
+  cursor: pointer;
+  background-color: rgb(34, 14, 109);
+}
+
+.simplex-btn:active {
+  cursor: pointer;
+  background-color: rgb(18, 8, 75);
+}
+
+.simplex :only-child {
+  margin: 10px 0;
+}
+
+.simplex-variables {
+  margin: 10px 0;
+}
+
+.simplex-num-restrictions {
+  margin: 10px 0;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"],
+input[type="number"]:hover,
+input[type="number"]:focus {
+  appearance: none;
+  -moz-appearance: textfield;
+}
+
+.simplex-table {
+  border-collapse: collapse;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.simplex-table th,
+.simplex-table td {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.simplex-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
