@@ -263,18 +263,46 @@ function performPivot(table, pivot) {
   return table;
 }
 
+// Преобразование числа в строку: целое число или дробь
+function formatFraction(value) {
+  if (Number.isInteger(value)) {
+    return value; // Если целое, вернуть как есть
+  }
+
+  const tolerance = 1e-6; // Точность округления
+  let numerator = 1;
+  let denominator = 1;
+
+  while (Math.abs(value - numerator / denominator) > tolerance) {
+    if (numerator / denominator < value) {
+      numerator++;
+    } else {
+      denominator++;
+    }
+  }
+
+  // Упрощение дроби
+  const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+  const divisor = gcd(numerator, denominator);
+
+  numerator /= divisor;
+  denominator /= divisor;
+
+  return `${numerator}/${denominator}`; // Вернуть дробь
+}
+
 // Отображение результата
 function displayResult(table, data) {
   const result = {};
   const lastRow = table[table.length - 1];
-  result.optimalValue = Math.round(lastRow[lastRow.length - 1]);
+  result.optimalValue = lastRow[lastRow.length - 1];
 
   const variables = new Array(table[0].length - 2).fill(0);
 
   for (let i = 0; i < table.length - 1; i++) {
     const basicVarIndex = table[i].findIndex((value) => value === 1);
     if (basicVarIndex >= 0 && basicVarIndex < variables.length) {
-      variables[basicVarIndex] = Math.round(table[i][table[i].length - 1]);
+      variables[basicVarIndex] = table[i][table[i].length - 1];
     }
   }
 
@@ -282,20 +310,25 @@ function displayResult(table, data) {
 
   // Формирование ответа
   const variableValues = result.variables
-    .map((val, idx) => `x<sub>${idx + 1}</sub> = ${val}`)
+    .map((val, idx) => `x<sub>${idx + 1}</sub> = ${formatFraction(val)}`)
     .join(", ");
+
   const objectiveFunction = data.objectiveFunction
-    .map((coeff, idx) => `${coeff}·${result.variables[idx]}`)
+    .map((coeff, idx) => `${coeff}·${formatFraction(result.variables[idx])}`)
     .join(" + ");
-  const calculation = `${objectiveFunction} = ${result.optimalValue}`;
 
-  tableContainer.innerHTML += `Текущий план X: [ ${result.variables.join(
-    ", "
-  )} ]<br>Целевая функция F: ${calculation}<br>Проверяем план на оптимальность: отрицательные дельты отсутствуют, следовательно план оптимален.<br>Ответ: ${variableValues}, F = ${
+  const calculation = `${objectiveFunction} = ${formatFraction(
     result.optimalValue
-  }`;
-}
+  )}`;
 
+  tableContainer.innerHTML += `Текущий план X: [ ${result.variables
+    .map(formatFraction)
+    .join(
+      ", "
+    )} ]<br>Целевая функция F: ${calculation}<br>Проверяем план на оптимальность: отрицательные дельты отсутствуют, следовательно план оптимален.<br>Ответ: ${variableValues}, F = ${formatFraction(
+    result.optimalValue
+  )}`;
+}
 function generateTable(varsCount, restrCount) {
   let html = ``;
   html += `<div class="simplex-table">`;
