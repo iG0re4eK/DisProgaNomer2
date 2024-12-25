@@ -288,7 +288,8 @@ function formatFraction(value) {
   numerator /= divisor;
   denominator /= divisor;
 
-  return `${numerator}/${denominator}`; // Вернуть дробь
+  // Если знаменатель равен 1, возвращаем только числитель
+  return denominator === 1 ? numerator : `${numerator}/${denominator}`;
 }
 
 // Отображение результата
